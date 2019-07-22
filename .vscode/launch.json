@@ -11,7 +11,9 @@
       "program": "${workspaceFolder}/bin/index.js",
       "args": [
         "anime",
-        "today"
+        "today",
+        "-l",
+        "40"
       ]
     }
   ]
