@@ -10,8 +10,8 @@
       "name": "Launch Program",
       "program": "${workspaceFolder}/bin/index.js",
       "args": [
-        "-p",
-        "ageeee"
+        "anime",
+        "today"
       ]
     }
   ]
