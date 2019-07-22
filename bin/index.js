@@ -7,7 +7,7 @@ const open = require('open');
 const chalk = require('chalk');
 const ora = require('ora');
 const package = require('../package.json');
-const spinner = ora('哔哩哔哩 (゜-゜)つロ 干杯~');
+const spinner = ora('获取新番中....');
 
 // [type] 可选
 // <type> 必选
@@ -23,6 +23,7 @@ program
   .version(package.version)
   .command('anime [day]')
   .description('choose anime day')
+  .option('--no-publish', 'filter published')
   .option('-l, --limit [amount]', 'limit amount', parseInt)
   .action(async (day, cmd) => {
     try {
@@ -30,7 +31,7 @@ program
       const { data } = await axios.get('https://bangumi.bilibili.com/web_api/timeline_global');
       const { result = [] } = data;
 
-      spinner.succeed();
+      spinner.succeed('哔哩哔哩 (゜-゜)つロ 干杯~');
 
       const date = new Date();
 
@@ -50,6 +51,9 @@ program
         if (cmd.limit) {
           filterArr[0].seasons = filterArr[0].seasons.slice(0, cmd.limit);
         }
+        if (!cmd.publish) {
+          filterArr[0].seasons = filterArr[0].seasons.filter(item => !item.is_published);
+        }
         const choices = filterArr[0].seasons.map(item => {
           let title = `${item.title} (${item.pub_time} ${item.is_published ? '' : '即将更新'} ${item.pub_index})`;
           if (item.delay === 1) {
@@ -61,18 +65,22 @@ program
           };
         });
 
+        if (!choices.length) {
+          console.log(chalk.black.bgRed('没有新番可选!'));
+          process.exit(1);
+        }
+
         inquirer.prompt([{
           type: 'list',
           name: 'seasonId',
-          message: '打开哪部新番?',
+          message: chalk.green('打开哪部新番?'),
           choices,
         }]).then(async (answers) => {
           await open(`https://www.bilibili.com/bangumi/play/ss${answers.seasonId}`);
         })
       }
     } catch (err) {
-      spinner.fail();
-      console.log(chalk.black.bgRed('获取新番失败!'));
+      spinner.fail('获取新番失败!');
       process.exit(1);
     }
   });

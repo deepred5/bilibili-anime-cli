@@ -1,10 +1,12 @@
 {
-  "name": "bilibili-anime-cli",
+  "name": "bili-anime",
   "version": "1.0.0",
   "description": "A cli tool for bilibili anime",
-  "main": "index.js",
   "bin": {
     "bili-anime": "bin/index.js"
+  },
+  "engines": {
+    "node": ">=8"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -14,18 +16,20 @@
     "open": "^6.4.0",
     "ora": "^3.4.0"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/deepred5/bilibili-anime-cli.git"
   },
-  "author": "",
+  "author": "deepred5",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/deepred5/bilibili-anime-cli/issues"
   },
-  "homepage": "https://github.com/deepred5/bilibili-anime-cli#readme"
+  "homepage": "https://github.com/deepred5/bilibili-anime-cli#readme",
+  "keywords": [
+    "bilibili",
+    "anime",
+    "bangumi",
+    "command-line"
+  ]
 }
